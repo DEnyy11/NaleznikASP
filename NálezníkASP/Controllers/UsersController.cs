@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NálezníkASP.DTO;
 using NálezníkASP.Models;
@@ -14,7 +15,7 @@ namespace NálezníkASP.Controllers {
             this.userManager = userManager;
             this.passwordHasher = passwordHasher;
         }
-
+        [Authorize (Roles = "Implementor,UserManager")]
         public IActionResult Index() {
             return View(userManager.Users);
         }

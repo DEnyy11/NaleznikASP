@@ -11,7 +11,7 @@
         public int? MintingYear { get; set; }
         public int? Nominal {  get; set; }
         public byte[]? FindingPhoto { get; set; }
-        public byte[]? AfterCleanPhoto { get; set; } 
+        public byte[]?  AfterCleanPhoto { get; set; } 
 
 
     }

@@ -16,10 +16,10 @@ namespace NálezníkASP.Controllers {
         [Authorize]
         public async Task<IActionResult> IndexAsync() {
             AppUser user = await userManager.GetUserAsync(HttpContext.User);
-            //string message = $"Hello {user.UserName}";
+            string message = $"Hello {user.UserName}";
             return View();
         }
-
+        
         public IActionResult Privacy() {
             return View();
         }
