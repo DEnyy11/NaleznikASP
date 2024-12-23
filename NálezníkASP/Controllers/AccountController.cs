@@ -1,17 +1,19 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NálezníkASP.DTO;
 using NálezníkASP.Models;
 using reCAPTCHA.AspNetCore;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace NálezníkASP.Controllers {
     public class AccountController : Controller {
-        private UserManager<AppUser> userManager;
+        private Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager;
         private SignInManager<AppUser> signInManager;
      
 
-        public AccountController(UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) {
+        public AccountController(Microsoft.AspNetCore.Identity.UserManager<AppUser> userManager, SignInManager<AppUser> signInManager) {
             this.userManager = userManager;
             this.signInManager = signInManager;
       
@@ -42,11 +44,7 @@ namespace NálezníkASP.Controllers {
             }
             return View(loginDto);
         }
-        [HttpGet]
-        public IActionResult Register() {
-            return View();
-        }
-
+     
         public async Task<IActionResult> Logout() {
             await signInManager.SignOutAsync();
             return RedirectToAction("Index", "Home");
@@ -54,6 +52,37 @@ namespace NálezníkASP.Controllers {
 
         public IActionResult AccessDenied() {
             return View();
+        }
+        [HttpGet]
+        public IActionResult Register() {
+            return View();
+        }
+        [HttpPost]
+        public async Task <IActionResult> Register(RegisterDto registerDto) {
+            if (ModelState.IsValid) { 
+
+                var emailConfirm = await userManager.FindByEmailAsync(registerDto.Email);
+                if (emailConfirm != null) {
+                    ModelState.AddModelError("", "There is already an account with this email");
+                    return View(registerDto);
+                }
+
+                var user = new AppUser {UserName = registerDto.UserName, Email = registerDto.Email };
+                var result = await userManager.CreateAsync(user, registerDto.Password);
+
+                if (result.Succeeded) {
+                    await userManager.AddToRoleAsync(user, "User");
+                    await signInManager.SignInAsync(user, isPersistent: false);
+
+                    return RedirectToAction("Index", "Home");
+                }
+
+                foreach (var error in result.Errors) {
+                    ModelState.AddModelError("", error.Description);
+                }
+            }
+            return View ();
+            
         }
 
     }

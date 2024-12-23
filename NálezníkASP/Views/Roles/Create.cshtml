@@ -1,0 +1,22 @@
+﻿@model string
+
+<h1 class="text-center mb-4">Create a Role</h1>
+
+<div class="d-flex justify-content-start mb-3">
+    <a asp-action="Index" class="btn btn-secondary rounded-pill px-4 py-2">Back</a>
+</div>
+
+<div class="container">
+    <div asp-validation-summary="All" class="text-danger mb-4"></div>
+
+    <form asp-action="Create" method="post">
+        <div class="mb-4">
+            <label for="name" class="form-label fw-bold">Name:</label>
+            <input name="name" class="form-control form-control-lg rounded-pill" placeholder="Enter role name" required />
+        </div>
+
+        <div class="d-grid gap-2">
+            <button type="submit" class="btn btn-primary rounded-pill py-2">Create</button>
+        </div>
+    </form>
+</div>
