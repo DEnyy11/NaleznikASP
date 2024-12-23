@@ -1,0 +1,17 @@
+﻿@using NálezníkASP.DTO
+@model FindingDto
+
+<h1 class="text-center mb-4">New Finding</h1>
+
+<div class="d-flex justify-content-center mb-4">
+    <!-- Coin Button -->
+    <a href="@Url.Action("NewCoin", "Finding")" class="btn btn-light shadow-lg mx-3" style="width: 200px; height: 150px; border-radius: 15px;">
+        <img src="~/images/coins.png" alt="Coin" class="img-fluid mb-3" style="max-height: 100px;" />
+        <p class="fw-bold">Coin</p>
+    </a>
+    <!-- Artifact Button -->
+    <a href="@Url.Action("NewArtifact", "Finding")" class="btn btn-light shadow-lg mx-3" style="width: 200px; height: 150px; border-radius: 15px;">
+        <img src="~/images/artefact.png" alt="Artifact" class="img-fluid mb-3" style="max-height: 100px;" />
+        <p class="fw-bold">Artifact</p>
+    </a>
+</div>

@@ -1,0 +1,80 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Dashboard</h1>
+
+    <!-- Počet Nálezů -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Počet Nálezů</div>
+                <div class="card-body">
+                    <h2 class="text-center">150</h2> <!-- Tohle bude později dynamické -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Nejstarší Nález -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Nejstarší Nález</div>
+                <div class="card-body">
+                    <h5>Starověká mincovna</h5> <!-- Popis nejstaršího nálezu -->
+                    <p>Datum: 15. ledna 1980</p> <!-- Datum nejstaršího nálezu -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Nejmladší Nález -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Nejmladší Nález</div>
+                <div class="card-body">
+                    <h5>Zlatý prsten</h5> <!-- Popis nejmladšího nálezu -->
+                    <p>Datum: 23. prosince 2024</p> <!-- Datum nejmladšího nálezu -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Další Sekce -->
+    <div class="row mt-4">
+        <!-- Nejhlubší Nález -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Nejhlubší Nález</div>
+                <div class="card-body">
+                    <h5>Stříbrná mince</h5> <!-- Popis nejhlubšího nálezu -->
+                    <p>Hloubka: 5,5 metrů</p> <!-- Hloubka nejhlubšího nálezu -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Počet Mincí -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Počet Mincí</div>
+                <div class="card-body">
+                    <h2 class="text-center">320</h2> <!-- Počet mincí -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Počet Artefaktů -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Počet Artefaktů</div>
+                <div class="card-body">
+                    <h2 class="text-center">85</h2> <!-- Počet artefaktů -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="text-center mt-4">
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+    </div>
+</div>
