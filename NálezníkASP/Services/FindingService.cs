@@ -36,12 +36,12 @@ namespace NálezníkASP.Services {
 			};
 		}
 
-		internal async Task SaveFindingAsync(FindingDto finding, AppUser user) {
-			await dbContext.findings.AddAsync(DtoToModel(finding, user));
+		internal async Task SaveFindingAsync(FindingDto finding, AppUser user, bool IsCoin) {
+			await dbContext.findings.AddAsync(DtoToModel(finding, user, IsCoin));
             await dbContext.SaveChangesAsync();
 		}
 
-		private Finding DtoToModel(FindingDto finding, AppUser user) {
+		private Finding DtoToModel(FindingDto finding, AppUser user, bool IsCoin) {
 
 			return new Finding {
 				Id = finding.Id,
@@ -49,7 +49,7 @@ namespace NálezníkASP.Services {
 				Description = finding.Description,
 				FindingDate = finding.FindingDate,
 				Depth = finding.Depth,
-				Coin = finding.Coin,
+				Coin = IsCoin,
 				LocationLangtitude = finding.LocationLangtitude,
 				LocationLatitude = finding.LocationLatitude,
 				MintingYear = finding.MintingYear,
@@ -57,6 +57,25 @@ namespace NálezníkASP.Services {
 				userId = user.Id
 
 			};
+		}
+
+        internal async Task<FindingDto> GetByIdAsync(int id, AppUser user) {
+			var finding = await dbContext.findings.Where(finding => finding.userId == user.Id && finding.Id == id).FirstOrDefaultAsync();
+			if (finding != null) {
+                return ModelToDto(finding);
+            }
+            return null;
+        }
+
+        internal async Task DeleteAsync(int id) {
+            var Finding = await dbContext.findings.FirstOrDefaultAsync(x => x.Id == id);
+            dbContext.Remove(Finding);
+            await dbContext.SaveChangesAsync();
+        }
+
+		internal async Task UpdateAsync(int id, FindingDto finding, AppUser? user, bool IsCoin) {
+			dbContext.Update(DtoToModel(finding, user, IsCoin));
+			await dbContext.SaveChangesAsync();
 		}
 	}
 }

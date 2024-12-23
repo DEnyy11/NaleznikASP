@@ -22,9 +22,13 @@ namespace NálezníkASP.Controllers {
 			return View();
 		}
 
-		public async Task<IActionResult> SaveAsync(FindingDto finding) {
+		public async Task<IActionResult> SaveAsync(FindingDto finding, string sourceView) {
+            bool IsCoin = false;
+            if (sourceView == "Coin") {
+                IsCoin = true;
+            }
             var user = await userManager.GetUserAsync(HttpContext.User);
-            await findingService.SaveFindingAsync(finding, user);
+            await findingService.SaveFindingAsync(finding, user, IsCoin);
             return RedirectToAction("Index");
         }
 
@@ -39,6 +43,33 @@ namespace NálezníkASP.Controllers {
 			var user = await userManager.GetUserAsync(HttpContext.User);
 			var allFindings = await findingService.GetAllFindings(user);
 			return View(allFindings);
+		}
+        [HttpPost]
+        public async Task<IActionResult> Delete(int id) {
+            var user = await userManager.GetUserAsync(HttpContext.User);
+            var subjectToDelete = await findingService.GetByIdAsync(id, user);
+            if (subjectToDelete == null) {
+                return View("NotFound");
+            }
+            await findingService.DeleteAsync(id);
+            return RedirectToAction("AllFidings");
+        }
+		[HttpGet]
+		public async Task<IActionResult> EditAsync(int id) {
+			var user = await userManager.GetUserAsync(HttpContext.User);
+			var finding = await findingService.GetByIdAsync(id, user);
+			if (finding == null) {
+				return View("NotFound");
+			}
+
+			return View(finding);
+		}
+		[HttpPost]
+		public async Task<IActionResult> EditAsync(int id, FindingDto finding, string sourceView) {
+			
+			var user = await userManager.GetUserAsync(HttpContext.User);
+			await findingService.UpdateAsync(id, finding, user, finding.Coin);
+			return RedirectToAction("AllFidings");
 		}
 
 

@@ -1,8 +1,13 @@
-﻿namespace NálezníkASP.DTO {
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace NálezníkASP.DTO {
     public class FindingDto {
         public int Id {  get; set; }
+        [Required]
         public string Name { get; set; }
+        [Required]
         public string Description { get; set; }
+        [Required]
         public DateTime FindingDate { get; set; }
         public double Depth { get; set; }
         public bool Coin { get; set; }

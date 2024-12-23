@@ -1,0 +1,79 @@
+﻿@using NálezníkASP.DTO
+@model FindingDto
+
+<h4 class="text-center mb-4 text-primary">Edit Finding</h4>
+
+<form asp-action="Edit" enctype="multipart/form-data">
+    <div class="card shadow-sm">
+        <div class="card-body">
+
+            <!-- Coin Checkbox -->
+            <div class="form-check mb-4">
+                <input type="checkbox" asp-for="Coin" class="form-check-input" id="coinCheckbox" />
+                <label asp-for="Coin" class="form-check-label" for="coinCheckbox">Is this a coin?</label>
+            </div>
+
+            <!-- Name -->
+            <div class="mb-3">
+                <label asp-for="Name" class="form-label fw-bold">Name</label>
+                <input type="text" asp-for="Name" class="form-control rounded-pill" placeholder="Enter the name of the finding" />
+            </div>
+
+            <!-- Description -->
+            <div class="mb-3">
+                <label asp-for="Description" class="form-label fw-bold">Description</label>
+                <textarea asp-for="Description" class="form-control rounded-pill" rows="3" placeholder="Enter a description"></textarea>
+            </div>
+
+            <!-- Finding Date -->
+            <div class="mb-3">
+                <label asp-for="FindingDate" class="form-label fw-bold">Finding Date</label>
+                <input type="date" asp-for="FindingDate" class="form-control rounded-pill" />
+            </div>
+
+            <!-- Depth -->
+            <div class="mb-3">
+                <label asp-for="Depth" class="form-label fw-bold">Depth (cm)</label>
+                <input type="number" asp-for="Depth" class="form-control rounded-pill" placeholder="Enter the depth" />
+            </div>
+
+            <!-- Location Coordinates -->
+            <div class="mb-3">
+                <label asp-for="LocationLangtitude" class="form-label fw-bold">Longitude</label>
+                <input type="number" asp-for="LocationLangtitude" class="form-control rounded-pill" placeholder="Enter longitude" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="LocationLatitude" class="form-label fw-bold">Latitude</label>
+                <input type="number" asp-for="LocationLatitude" class="form-control rounded-pill" placeholder="Enter latitude" />
+            </div>
+
+            <!-- Conditionally Display Minting Year and Nominal for Coin -->
+            @if (Model.Coin == true) {
+                <div class="mb-3">
+                    <label asp-for="MintingYear" class="form-label fw-bold">Minting Year</label>
+                    <input type="number" asp-for="MintingYear" class="form-control rounded-pill" placeholder="Enter minting year" />
+                </div>
+                <div class="mb-3">
+                    <label asp-for="Nominal" class="form-label fw-bold">Nominal Value</label>
+                    <input type="number" asp-for="Nominal" class="form-control rounded-pill" placeholder="Enter nominal value" />
+                </div>
+            }
+
+            <!-- Photo Uploads -->
+            <div class="mb-3">
+                <label asp-for="FindingPhoto" class="form-label fw-bold">Finding Photo</label>
+                <input type="file" asp-for="FindingPhoto" class="form-control" />
+            </div>
+            <div class="mb-3">
+                <label asp-for="AfterCleanPhoto" class="form-label fw-bold">After Clean Photo</label>
+                <input type="file" asp-for="AfterCleanPhoto" class="form-control" />
+            </div>
+
+            <!-- Submit Button -->
+            <div class="text-center mt-4">
+                <button type="submit" class="btn btn-success rounded-pill px-4">Update</button>
+            </div>
+
+        </div>
+    </div>
+</form>
