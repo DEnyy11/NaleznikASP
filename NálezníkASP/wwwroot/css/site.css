@@ -20,3 +20,54 @@ html {
 body {
   margin-bottom: 60px;
 }
+/* Zlepšení vzhledu a interakce pøi najetí myší */
+.navbar-nav .nav-item .nav-link {
+    font-weight: 500;
+    color: #333;
+    transition: all 0.3s ease;
+}
+
+    .navbar-nav .nav-item .nav-link:hover,
+    .navbar-nav .nav-item .nav-link:focus {
+        color: #007bff; /* Modrá barva pro hover efekt */
+        background-color: #f1f1f1; /* Svìtle šedé pozadí pøi hover */
+        border-radius: 5px;
+    }
+
+    .navbar-nav .nav-item .nav-link i {
+        margin-right: 8px;
+        font-size: 1.2rem;
+    }
+
+/* Toggler pro mobilní zaøízení */
+.navbar-toggler {
+    border-color: transparent;
+}
+
+.navbar-toggler-icon {
+    background-color: transparent;
+}
+
+/* Zlepšení vzhledu aktivního odkazu */
+.navbar-nav .nav-item .nav-link.active {
+    color: #007bff;
+    font-weight: 600;
+}
+
+/* Použití ikon */
+.navbar-nav .nav-item .nav-link i {
+    font-size: 1.4rem;
+    vertical-align: middle;
+}
+
+/* Zlepšení vzhledu Navbaru */
+.navbar {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* jemný stín pro navbar */
+}
+
+/* Zmìny pro menší obrazovky */
+@media (max-width: 991px) {
+    .navbar-nav .nav-item .nav-link {
+        font-size: 1rem; /* menší písmo pro mobilní verzi */
+    }
+}

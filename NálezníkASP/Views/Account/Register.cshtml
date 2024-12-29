@@ -3,31 +3,45 @@
 @{
     ViewData["Title"] = "Register";
 }
+
 <div class="container mt-5 d-flex justify-content-center">
-    <div class="card shadow-lg p-4" style="width: 400px;">
-        <h1 class="text-center mb-4">Register</h1>
+    <div class="card shadow-lg p-4" style="width: 400px; border-radius: 15px; background-color: #f8f9fa;">
+        <h1 class="text-center mb-4" style="color: #333;">Register</h1>
         <div class="text-danger text-center mb-3" asp-validation-summary="All"></div>
         <form asp-action="Register" method="post">
+           
             <div class="mb-3">
-                <label asp-for="UserName" class="form-label fw-bold">Username</label>
-                <input asp-for="UserName" class="form-control rounded-pill" placeholder="Choose a username" />
+                <label asp-for="UserName" class="form-label fw-bold" style="color: #555;">Username</label>
+                <input asp-for="UserName" class="form-control rounded-pill" placeholder="Choose a username" required />
             </div>
+
             <div class="mb-3">
-                <label asp-for="Email" class="form-label fw-bold">Email</label>
-                <input asp-for="Email" type="email" class="form-control rounded-pill" placeholder="Enter your email" />
+                <label asp-for="Email" class="form-label fw-bold" style="color: #555;">Email</label>
+                <input asp-for="Email" type="email" class="form-control rounded-pill" placeholder="Enter your email" required />
             </div>
+
             <div class="mb-3">
-                <label asp-for="Password" class="form-label fw-bold">Password</label>
-                <input asp-for="Password" type="password" class="form-control rounded-pill" placeholder="Enter a password" />
+                <label asp-for="Password" class="form-label fw-bold" style="color: #555;">Password</label>
+                <input asp-for="Password" type="password" class="form-control rounded-pill" placeholder="Enter a password" required />
             </div>
+
             <div class="mb-3">
-                <label asp-for="ConfirmPassword" class="form-label fw-bold">Confirm Password</label>
-                <input asp-for="ConfirmPassword" type="password" class="form-control rounded-pill" placeholder="Confirm your password" />
+                <label asp-for="ConfirmPassword" class="form-label fw-bold" style="color: #555;">Confirm Password</label>
+                <input asp-for="ConfirmPassword" type="password" class="form-control rounded-pill" placeholder="Confirm your password" required />
             </div>
+
             <div class="d-grid gap-2">
-                <button class="btn btn-primary rounded-pill" type="submit">Register</button>
+                <button class="btn btn-primary rounded-pill" type="submit" style="background-color: #007bff; border-color: #007bff;">
+                    <i class="bi bi-person-plus-fill"></i> Register
+                </button>
             </div>
         </form>
-      
+
+        <div class="text-center mt-3">
+            <p style="color: #555;">
+                Already have an account?
+                <a asp-controller="Account" asp-action="Login" class="text-decoration-none" style="color: #007bff;">Log in here!</a>
+            </p>
+        </div>
     </div>
 </div>

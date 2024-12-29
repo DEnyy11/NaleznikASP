@@ -1,62 +1,72 @@
 ﻿<div class="container mt-5">
-    <h1 class="mb-4 text-center text-primary">List of Findings</h1>
+	<h1 class="mb-4 text-center text-black">List of Findings</h1>
 
-    <!-- Search and Filter Form -->
-    <form method="get" asp-action="Index" class="row mb-4">
-        <div class="col-md-4">
-            <input type="text" name="searchTerm" class="form-control" placeholder="Search by name or description" value="@ViewData["SearchTerm"]" />
-        </div>
-        <div class="col-md-4">
-            <select name="filterType" class="form-control">
-                <option value="">All Types</option>
-                @* <option value="Coin" @(ViewData["FilterType"]?.ToString() == "Coin" ? "selected" : "")>Coins</option>
-                <option value="Artifact" @(ViewData["FilterType"]?.ToString() == "Artifact" ? "selected" : "")>Artifacts</option> *@
-            </select>
-        </div>
-        <div class="col-md-4">
-            <button type="submit" class="btn btn-primary w-100">
-                <i class="bi bi-search"></i> Search
-            </button>
-        </div>
-    </form>
+	<form asp-action="AllFidings" method="get">
+		<div class="row">
 
-    @if (Model == null) {
-        <div class="alert alert-warning text-center">
-            No findings available. <a asp-action="Index" class="alert-link">Add a new finding</a>.
-        </div>
-    }
-    else {
-        <div class="row g-4">
-            @foreach (var item in Model) {
-                <div class="col-md-4">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <h5 class="card-title text-dark">@item.Name</h5>
-                            <p class="card-text">
-                                <strong>Type:</strong> @(item.Coin ? "Coin" : "Artifact") <br />
-                                <strong>Date found:</strong> @item.FindingDate.ToString("dd.MM.yyyy") <br />
-                                <strong>Description:</strong> @item.Description
-                            </p>
-                            <div class="d-flex justify-content-between">
-                                <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">
-                                    <i class="bi bi-pencil-square"></i> Edit
-                                </a>
-                                <form method="post" asp-action="Delete" asp-route-id="@item.Id" class="d-inline">
-                                    <button type="submit" class="btn btn-danger btn-sm">
-                                        <i class="bi bi-trash"></i> Delete
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    }
+			<div class="col-md-4">
+				<input type="text" name="filterName" class="form-control" placeholder="Search by name" value="@ViewData["FilterName"]" />
+			</div>
 
-    <div class="mt-4 text-center">
-        <a class="btn btn-success btn-lg" asp-action="Index">
-            <i class="bi bi-plus-circle"></i> Add New Finding
-        </a>
-    </div>
+			<div class="col-md-4">
+				<select name="filterType" class="form-control">
+					<option value="">All Types</option>
+					<option value="Coin">Coin@(ViewData["FilterType"]?.ToString() == "Coin" ? "selected" : "")</option>
+					<option value="Artifact">Artifact@(ViewData["FilterType"]?.ToString() == "Artifact" ? "selected" : "")</option>
+				</select>
+			</div>
+
+			<div class="col-md-4">
+				<button type="submit" class="btn btn-primary w-100">Search</button>
+			</div>
+		</div>
+	</form>
+
+
+	@if (Model == null) {
+		<div class="alert alert-warning text-center">
+			No findings available. <a asp-action="Index" class="alert-link">Add a new finding</a>.
+		</div>
+	}
+	else {
+		<div class="row g-4">
+			@foreach (var item in Model) {
+				<div class="col-md-4">
+					<div class="card shadow-sm">
+						<div class="card-body">
+							<h5 class="card-title text-dark">@item.Name</h5>
+							@if (item.AfterCleanPhotoReview != null) {
+								<img src="data:image/jpeg;base64,@Convert.ToBase64String(item.AfterCleanPhotoReview)" style="max-width: 100%; max-height: 200px; object-fit: contain;" />
+
+							}
+							else {
+								<p class="text-muted">No photo available</p>
+							}
+							<p class="card-text">
+								<strong>Type:</strong> @(item.Coin ? "Coin" : "Artifact") <br />
+								<strong>Date found:</strong> @item.FindingDate.ToString("dd.MM.yyyy") <br />
+								<strong>Description:</strong> @item.Description
+							</p>
+							<div class="d-flex justify-content-between">
+								<a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.Id">
+									<i class="bi bi-pencil-square"></i> Edit
+								</a>
+								<form method="post" asp-action="Delete" asp-route-id="@item.Id" class="d-inline">
+									<button type="submit" class="btn btn-danger btn-sm">
+										<i class="bi bi-trash"></i> Delete
+									</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+			}
+		</div>
+	}
+
+	<div class="mt-4 text-center">
+		<a class="btn btn-success btn-lg" asp-action="Index">
+			<i class="bi bi-plus-circle"></i> Add New Finding
+		</a>
+	</div>
 </div>

@@ -1,43 +1,40 @@
 ﻿@using NálezníkASP.DTO
 @model LoginDto
+
 @{
     ViewData["Title"] = "Login";
 }
+
 <div class="container mt-5 d-flex justify-content-center">
-    <div class="card shadow-lg p-4" style="width: 400px;">
-        <h1 class="text-center mb-4">Login</h1>
+    <div class="card shadow-lg p-4" style="width: 400px; border-radius: 15px; background-color: #f8f9fa;">
+        <h1 class="text-center mb-4" style="color: #333;">Login</h1>
+
         <div class="text-danger text-center mb-3" asp-validation-summary="All"></div>
+
         <form asp-action="Login" method="post">
             <input type="hidden" asp-for="ReturnUrl" />
-
-            <!-- Username -->
             <div class="mb-3">
-                <label asp-for="UserName" class="form-label fw-bold">Username</label>
+                <label asp-for="UserName" class="form-label fw-bold" style="color: #555;">Username</label>
                 <input asp-for="UserName" class="form-control rounded-pill" placeholder="Enter your username" required />
             </div>
-
-            <!-- Password -->
             <div class="mb-3">
-                <label asp-for="Password" class="form-label fw-bold">Password</label>
+                <label asp-for="Password" class="form-label fw-bold" style="color: #555;">Password</label>
                 <input asp-for="Password" type="password" class="form-control rounded-pill" placeholder="Enter your password" required />
             </div>
-
-            <!-- Remember Me Checkbox -->
             <div class="form-check mb-3">
                 <input type="checkbox" asp-for="RememberMe" class="form-check-input" />
-                <label class="form-check-label" for="RememberMe">Remember me</label>
+                <label class="form-check-label" for="RememberMe" style="color: #555;">Remember me</label>
             </div>
-
             <div class="d-grid gap-2">
-                <button class="btn btn-primary rounded-pill" type="submit">Log In</button>
+                <button class="btn btn-primary rounded-pill" type="submit" style="background-color: #007bff; border-color: #007bff;">
+                    <i class="bi bi-box-arrow-in-right"></i> Log In
+                </button>
             </div>
         </form>
-
-        <!-- Register link -->
         <div class="text-center mt-3">
-            <p>
+            <p style="color: #555;">
                 Don't have an account?
-                <a asp-controller="Account" asp-action="Register" class="text-decoration-none  Configuration does not exist">Register here</a>.
+                <a asp-controller="Account" asp-action="Register" class="text-decoration-none" style="color: #007bff;">Register here</a>.
             </p>
         </div>
     </div>

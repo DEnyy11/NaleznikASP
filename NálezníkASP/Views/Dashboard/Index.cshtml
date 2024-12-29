@@ -1,0 +1,112 @@
+﻿@using NálezníkASP.DTO
+@model DashboardDTO
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Dashboard</h1>
+    <!-- Total Findings -->
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Total Findings</div>
+                <div class="card-body">
+                    @if (Model.TotalFindings > 0) {
+                        <h2 class="text-center">@Model.TotalFindings</h2>
+                    }
+                    else {
+                        <p class="text-center">No findings yet</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Oldest Finding -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Oldest Finding</div>
+                <div class="card-body">
+                    @if (Model.OldestFinding != null) {
+                        <p>Name: @Model.OldestFinding.Name</p>
+                        <p>Year: @Model.OldestFinding.MintingYear</p>
+                    }
+                    else {
+                        <p class="text-center">No findings yet</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Newest Finding -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Newest Finding</div>
+                <div class="card-body">
+                    @if (Model.NewestFinding != null) {
+                        <p>Name: @Model.NewestFinding.Name</p>
+                        <p>Year: @Model.NewestFinding.MintingYear</p>
+                    }
+                    else {
+                        <p class="text-center">No findings yet</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Other Sections -->
+    <div class="row mt-4">
+        <!-- Deepest Finding -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Deepest Finding</div>
+                <div class="card-body">
+                    @if (Model.DeepestFinding != null) {
+                        <p>Name: @Model.DeepestFinding.Name</p>
+                        <p>Depth: @Model.DeepestFinding.Depth (cm)</p>
+                    }
+                    else {
+                        <p class="text-center">No findings yet</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Coins Found -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Total coins found</div>
+                <div class="card-body">
+                    @if (Model.CoinsCount > 0) {
+                        <h2 class="text-center">@Model.CoinsCount</h2>
+                    }
+                    else {
+                        <p class="text-center">No coins found yet</p>
+                    }
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Artifacts Found -->
+        <div class="col-md-4">
+            <div class="card shadow-sm">
+                <div class="card-header">Total artifacts found</div>
+                <div class="card-body">
+                    @if (Model.ArtifactCount > 0) {
+                        <h2 class="text-center">@Model.ArtifactCount</h2>
+                    }
+                    else {
+                        <p class="text-center">No artifacts found yet</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout -->
+    <div class="text-center mt-4">
+        <a asp-controller="Account" asp-action="Logout" class="btn btn-danger">Logout</a>
+    </div>
+</div>

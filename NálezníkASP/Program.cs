@@ -9,8 +9,9 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddDbContext<ApplicationDbContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("FindingDbConnection")); });
+builder.Services.AddDbContext<ApplicationDbContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")); });
 builder.Services.AddScoped<FindingService>();
+builder.Services.AddScoped<DashboardService>();
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 8;
@@ -25,6 +26,7 @@ builder.Services.ConfigureApplicationCookie(options => {
     options.SlidingExpiration = true;
 });
 var app = builder.Build();
+app.UseStatusCodePagesWithReExecute("/Home/Error404");
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment()) {

@@ -7,47 +7,33 @@
     <div class="card shadow-sm">
         <div class="card-body">
 
-            <!-- Coin Checkbox -->
+      
             <div class="form-check mb-4">
                 <input type="checkbox" asp-for="Coin" class="form-check-input" id="coinCheckbox" />
                 <label asp-for="Coin" class="form-check-label" for="coinCheckbox">Is this a coin?</label>
             </div>
 
-            <!-- Name -->
+         
             <div class="mb-3">
                 <label asp-for="Name" class="form-label fw-bold">Name</label>
                 <input type="text" asp-for="Name" class="form-control rounded-pill" placeholder="Enter the name of the finding" />
             </div>
 
-            <!-- Description -->
             <div class="mb-3">
                 <label asp-for="Description" class="form-label fw-bold">Description</label>
                 <textarea asp-for="Description" class="form-control rounded-pill" rows="3" placeholder="Enter a description"></textarea>
             </div>
 
-            <!-- Finding Date -->
+  
             <div class="mb-3">
                 <label asp-for="FindingDate" class="form-label fw-bold">Finding Date</label>
                 <input type="date" asp-for="FindingDate" class="form-control rounded-pill" />
             </div>
 
-            <!-- Depth -->
             <div class="mb-3">
                 <label asp-for="Depth" class="form-label fw-bold">Depth (cm)</label>
                 <input type="number" asp-for="Depth" class="form-control rounded-pill" placeholder="Enter the depth" />
             </div>
-
-            <!-- Location Coordinates -->
-            <div class="mb-3">
-                <label asp-for="LocationLangtitude" class="form-label fw-bold">Longitude</label>
-                <input type="number" asp-for="LocationLangtitude" class="form-control rounded-pill" placeholder="Enter longitude" />
-            </div>
-            <div class="mb-3">
-                <label asp-for="LocationLatitude" class="form-label fw-bold">Latitude</label>
-                <input type="number" asp-for="LocationLatitude" class="form-control rounded-pill" placeholder="Enter latitude" />
-            </div>
-
-            <!-- Conditionally Display Minting Year and Nominal for Coin -->
             @if (Model.Coin == true) {
                 <div class="mb-3">
                     <label asp-for="MintingYear" class="form-label fw-bold">Minting Year</label>
@@ -58,18 +44,100 @@
                     <input type="number" asp-for="Nominal" class="form-control rounded-pill" placeholder="Enter nominal value" />
                 </div>
             }
-
-            <!-- Photo Uploads -->
             <div class="mb-3">
                 <label asp-for="FindingPhoto" class="form-label fw-bold">Finding Photo</label>
                 <input type="file" asp-for="FindingPhoto" class="form-control" />
             </div>
+            @if (Model.FindingPhotoReview != null) {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FindingPhotoReview)" style="max-width: 100%; max-height: 200px; object-fit: contain;" />
+
+            }
+            else {
+                <p class="text-muted">No photo available</p>
+            }
             <div class="mb-3">
                 <label asp-for="AfterCleanPhoto" class="form-label fw-bold">After Clean Photo</label>
                 <input type="file" asp-for="AfterCleanPhoto" class="form-control" />
             </div>
+            @if (Model.AfterCleanPhotoReview != null) {
+                <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.AfterCleanPhotoReview)" style="max-width: 100%; max-height: 200px; object-fit: contain;" />
 
-            <!-- Submit Button -->
+            }
+            else {
+                <p class="text-muted">No photo available</p>
+            }
+            <div class="row mb-3">
+                <div class="col-md-12 text-center">
+                    <h3 class="fw-bold">Location</h3>
+                </div>
+            </div>
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label asp-for="LocationLatitude" class="form-label fw-bold">Latitude</label>
+                    <input asp-for="LocationLatitude" id="LocationLatitude" type="number" step="0.0000000000000001" class="form-control rounded-pill" placeholder="Enter latitude" />
+                </div>
+                <div class="col-md-6">
+                    <label asp-for="LocationLongitude" class="form-label fw-bold">Longitude</label>
+                    <input asp-for="LocationLongitude" id="LocationLongitude" type="number" step="0.0000000000000001" class="form-control rounded-pill" placeholder="Enter longitude" />
+                </div>
+            </div>
+            <input asp-for="@Model.AfterCleanPhotoReview" id="AfterCleanPhotoReview" type="hidden" />
+            <input asp-for="@Model.FindingPhotoReview" id="FindingPhotoReview" type="hidden" />
+            <div id="map" style="height: 400px;"></div>
+            <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+            <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+            <script>
+                var map = L.map('map').setView([50.0755, 14.4378], 13); // Praha
+
+                L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                }).addTo(map);
+
+                var currentMarker = null;
+
+                // Inicializace markeru při načtení stránky
+                var initialLat = parseFloat(document.getElementById('LocationLatitude').value);
+                var initialLon = parseFloat(document.getElementById('LocationLongitude').value);
+
+                if (!isNaN(initialLat) && !isNaN(initialLon)) {
+                    var initialLatLon = [initialLat, initialLon];
+                    currentMarker = L.marker(initialLatLon).addTo(map);
+                    map.setView(initialLatLon, 13);
+                }
+
+                // Funkce pro aktualizaci markeru při změně hodnot
+                function updateMarker() {
+                    var lat = parseFloat(document.getElementById('LocationLatitude').value);
+                    var lon = parseFloat(document.getElementById('LocationLongitude').value);
+
+                    if (!isNaN(lat) && !isNaN(lon)) {
+                        var latLon = [lat, lon];
+                        if (currentMarker) {
+                            map.removeLayer(currentMarker);
+                        }
+                        currentMarker = L.marker(latLon).addTo(map);
+                        map.setView(latLon, 13);
+                    }
+                }
+
+                document.getElementById('LocationLatitude').addEventListener('input', updateMarker);
+                document.getElementById('LocationLongitude').addEventListener('input', updateMarker);
+
+                // Funkce pro přidání markeru po kliknutí na mapu
+                function onMapClick(e) {
+                    var lat = e.latlng.lat;
+                    var lon = e.latlng.lng;
+                    document.getElementById('LocationLatitude').value = lat;
+                    document.getElementById('LocationLongitude').value = lon;
+                    if (currentMarker) {
+                        map.removeLayer(currentMarker);
+                    }
+                    currentMarker = L.marker([lat, lon]).addTo(map);
+                }
+
+                map.on('click', onMapClick);
+            </script>
+
             <div class="text-center mt-4">
                 <button type="submit" class="btn btn-success rounded-pill px-4">Update</button>
             </div>

@@ -1,6 +1,84 @@
 ﻿@{
-    ViewData["Title"] = "Privacy Policy";
+    Layout = "_Layout";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="container mt-4">
+    <h2 class="text-center text-black mb-4">Welcome to the Nálezník!</h2>
+
+    <div class="row">
+        <div class="col-md-12">
+            <p>This application allows users to log and manage their discoveries of various artifacts and coins. It provides an intuitive way to record important details about each finding, as well as view and edit them later.</p>
+
+            <h4 class="text-black">Key Features</h4>
+            <ul>
+                <li>
+                    <strong>New Finding:</strong> In the "New Finding" menu, you can create a new entry for your discovery. Choose between:
+                    <ul>
+                        <li><strong>Artifact:</strong> Select this option if you found an object that is not a coin.</li>
+                        <li><strong>Coin:</strong> Choose this option if your discovery is a coin.</li>
+                    </ul>
+                    <p>
+                        For both types of findings, you can provide the following information:
+                        <ul>
+                            <li><strong>Description:</strong> Enter a detailed description of the artifact or coin.</li>
+                            <li><strong>Age:</strong> Indicate how old the object is (or approximate age if uncertain).</li>
+                            <li><strong>Photo:</strong> Upload a photo of the finding to accompany your entry.</li>
+                            <li><strong>Location:</strong> Provide the geographical location where the artifact or coin was found (latitude and longitude).</li>
+                        </ul>
+                    </p>
+                </li>
+
+                <li>
+                    <strong>All Findings:</strong> In the "All Findings" section, you can:
+                    <ul>
+                        <li>View a list of all artifacts and coins logged in the system.</li>
+                        <li>Edit any previously logged findings, allowing you to update details such as descriptions, photos, or location.</li>
+                    </ul>
+                </li>
+
+                <li>
+                    <strong>Map of Findings:</strong> In the "Map of Findings" section, you can view a map displaying the locations of all logged findings.
+                    <ul>
+                        <li>Each finding is marked on the map with a pin, and you can click on the pin to view additional details like the name, description, and the date of the finding.</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <h4 class="text-black">How to Use</h4>
+            <p>Follow these steps to log and manage your findings:</p>
+            <ol>
+                <li>
+                    <strong>Creating a New Finding:</strong>
+                    <ul>
+                        <li>Navigate to the "New Finding" menu.</li>
+                        <li>Select whether your discovery is an "Artifact" or a "Coin".</li>
+                        <li>Fill out the form with details about the object, including its description, age, and photo.</li>
+                        <li>Add the latitude and longitude of the location where the finding was made.</li>
+                        <li>Submit the form to save your finding.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Viewing and Editing Findings:</strong>
+                    <ul>
+                        <li>Go to the "All Findings" section to view your logged discoveries.</li>
+                        <li>You can edit any finding by clicking on the edit icon next to it. This allows you to update any of the details, including adding or changing the photos.</li>
+                    </ul>
+                </li>
+                <li>
+                    <strong>Viewing the Map of Findings:</strong>
+                    <ul>
+                        <li>Navigate to the "Map of Findings" section to view all logged findings on a map.</li>
+                        <li>Each finding is displayed as a marker, and you can click on the marker to view the associated details.</li>
+                    </ul>
+                </li>
+            </ol>
+
+            <h4 class="text-black">Menu Navigation</h4>
+            <ul>
+                <li><strong>New Finding:</strong> Create a new entry for an artifact or coin.</li>
+                <li><strong>All Findings:</strong> View, search, and edit all your discoveries.</li>
+                <li><strong>Map of Findings:</strong> View the geographical locations of all findings on a map.</li>
+            </ul>
+        </div>
+    </div>
+</div>

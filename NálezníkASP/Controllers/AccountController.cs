@@ -21,8 +21,11 @@ namespace NálezníkASP.Controllers {
         }
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Login(string returnUrl) {
+        public IActionResult Login(string? returnUrl) {
             LoginDto loginDto = new LoginDto();
+            if (string.IsNullOrEmpty(returnUrl)) {
+                returnUrl = Url.Content("~/");
+            }
             loginDto.ReturnUrl = returnUrl;
       
             return View(loginDto);
@@ -40,7 +43,7 @@ namespace NálezníkASP.Controllers {
                         return Redirect(loginDto.ReturnUrl ?? "/");
                     }
                 }
-                ModelState.AddModelError("", "Login failed");
+                ModelState.AddModelError("","Unknown username or bad password");
             }
             return View(loginDto);
         }
