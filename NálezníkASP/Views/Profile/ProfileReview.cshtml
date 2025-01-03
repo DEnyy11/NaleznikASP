@@ -2,8 +2,6 @@
 @model ProfileDto
 
 <div class="container mt-5">
-    <h1 class="text-center mb-4">Your Profile</h1>
-
     <div class="card shadow-sm">
         <div class="card-header text-center">
             <h3>@Model.UserName's Profile</h3>
@@ -17,10 +15,6 @@
                     else {
                         <img src="https://via.placeholder.com/150" class="img-fluid rounded-circle mb-3" alt="Profile Picture" />
                     }
-                    <form method="post" enctype="multipart/form-data">
-                        <input type="file" class="form-control-file" name="ProfilePicture" />
-                        <button type="submit" class="btn btn-secondary mt-2">Change Picture</button>
-                    </form>
                 </div>
                 <div class="col-md-8">
                     <div class="mb-3">
@@ -32,8 +26,5 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="text-center mt-4 d-flex justify-content-center">
-        <a asp-controller="Profile" asp-action="Edit" class="btn btn-primary">Edit profile</a>
     </div>
 </div>

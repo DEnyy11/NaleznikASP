@@ -7,13 +7,13 @@ namespace NálezníkASP.DTO {
         public string UserName { get; set; }
 
         [Required]
-        [EmailAddress]
+        [EmailAddress(ErrorMessage = "Please enter a valid email address.")]
         [Display(Name = "Email Address")]
         public string Email { get; set; }
 
         [Required]
-        [DataType(DataType.Password)]
-        public string Password { get; set; }
+		[DataType(DataType.Password, ErrorMessage = "Passwords must contain uppercase letters, lowercase letters, numbers, and symbols.")]
+		public string Password { get; set; }
 
         [Required]
         [DataType(DataType.Password)]

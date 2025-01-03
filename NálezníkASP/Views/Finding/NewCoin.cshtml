@@ -22,7 +22,13 @@
 			<div class="row mb-3">
 				<div class="col-md-6">
 					<label asp-for="FindingDate" class="form-label fw-bold">Finding Date</label>
-					<input asp-for="FindingDate" type="date" class="form-control rounded-pill" />
+					<input asp-for="FindingDate"
+						   type="date"
+						   class="form-control rounded-pill"
+						   min="2000-01-01"
+						   max="@DateTime.Today.ToString("yyyy-MM-dd")"
+						   value="@DateTime.Today.ToString("yyyy-MM-dd")"
+						   required />
 				</div>
 				<div class="col-md-6">
 					<label asp-for="Depth" class="form-label fw-bold">Depth (cm)</label>

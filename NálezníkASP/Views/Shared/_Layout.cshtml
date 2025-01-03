@@ -13,91 +13,119 @@
 	<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
 </head>
 <body style="background-color: #d3d3d3;">
-    <header>
-        <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
-            <div class="container-fluid">
-                <a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index" style="color: #333;">
-                    Nálezník
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+	<header>
+		<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm">
+			<div class="container-fluid">
+				<a class="navbar-brand fw-bold" asp-area="" asp-controller="Home" asp-action="Index" style="color: #333;">
+					Nálezník
+				</a>
+				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+						aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+					<span class="navbar-toggler-icon"></span>
+				</button>
 
-                @if (User.Identity.IsAuthenticated) {
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav ms-auto">
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
-                                    <i class="bi bi-house-door"></i> Home
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">
-                                    <i class="bi bi-grid-3x3-gap"></i> Dashboard
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Privacy">
-                                    <i class="bi bi-info-circle"></i> Information
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index">
-                                    <i class="bi bi-person-circle"></i> My Profile
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Finding" asp-action="Index">
-                                    <i class="bi bi-plus-circle"></i> New Finding
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Finding" asp-action="AllFidings">
-                                    <i class="bi bi-folder"></i> All Findings
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" asp-area="" asp-controller="Finding" asp-action="MapOfFindings">
-                                    <i class="bi bi-map"></i> Map of Findings
-                                </a>
-                            </li>
-                            @if (User.IsInRole("Implementor") || User.IsInRole("UserManager")) {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Users" asp-action="Index">
-                                        <i class="bi bi-person-lines-fill"></i> Users
-                                    </a>
-                                </li>
-                            }
-                            @if (User.IsInRole("Implementor")) {
-                                <li class="nav-item">
-                                    <a class="nav-link" asp-area="" asp-controller="Roles" asp-action="Index">
-                                        <i class="bi bi-shield-lock"></i> Roles
-                                    </a>
-                                </li>
-                            }
-                        </ul>
-                    </div>
-                }
-            </div>
-        </nav>
-    </header>
+				@if (User.Identity.IsAuthenticated) {
+					<div class="collapse navbar-collapse" id="navbarNav">
+						<ul class="navbar-nav ms-auto">
 
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+									<i class="bi bi-house-door"></i> Home
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Dashboard" asp-action="Index">
+									<i class="bi bi-grid-3x3-gap"></i> Dashboard
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Home" asp-action="Information">
+									<i class="bi bi-info-circle"></i> Information
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Profile" asp-action="Index">
+									<i class="bi bi-person-circle"></i> My Profile
+								</a>
+							</li>
 
-	<div class="container">
-		<main role="main" class="pb-3">
-			@RenderBody()
-		</main>
-	</div>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Finding" asp-action="Index">
+									<i class="bi bi-plus-circle"></i> New Finding
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Finding" asp-action="MyFindings">
+									<i class="bi bi-folder"></i> My Findings
+								</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" asp-area="" asp-controller="Finding" asp-action="MapOfFindings">
+									<i class="bi bi-map"></i> Map of Findings
+								</a>
+							</li>
+							<div class="navbar-divider"></div>
+							<li class="nav-item dropdown">
+								<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+									<i class="bi bi-globe-americas"></i> Other users
+								</a>
+								<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+									<li>
+										<a class="dropdown-item" asp-area="" asp-controller="Finding" asp-action="AllFindings">
+											<i class="bi bi-folder"></i> All findings
+										</a>
+									</li>
+										@* <li>
+											<a class="dropdown-item" asp-area="" asp-controller="Finding" asp-action="MyFindings">
+											<i class="bi bi-map"></i> Map of all findings
+											</a>
+										</li> *@ 
+								</ul>
+							</li>
+							@if (User.IsInRole("Implementor") || User.IsInRole("UserManager")) {
+								<div class="navbar-divider"></div>
+								<li class="nav-item dropdown">
+									<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+										<i class="bi bi-person-lines-fill"></i> Admin
+									</a>
+									<ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+										<li>
+											<a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">
+												<i class="bi bi-person-lines-fill"></i> Users
+											</a>
+										</li>
+										@if (User.IsInRole("Implementor")){
+											<li>
+												<a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="Index">
+													<i class="bi bi-shield-lock"></i> Roles
+												</a>
+											</li>
+											}
+										</ul>
+									</li>
+								}
 
-	<footer class="border-top footer text-muted">
+							</ul>
+						</div>
+					}
+				</div>
+			</nav>
+		</header>
+
 		<div class="container">
-			&copy; 2024 - Nálezník - <a asp-area="" asp-controller="Home" asp-action="Privacy">Information</a>
+			<main role="main" class="pb-3">
+				@RenderBody()
+			</main>
 		</div>
-	</footer>
-	<script src="~/lib/jquery/dist/jquery.min.js"></script>
-	<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-	<script src="~/js/site.js" asp-append-version="true"></script>
-	@await RenderSectionAsync("Scripts", required: false)
-</body>
-</html>
+
+		<footer class="border-top footer text-muted">
+			<div class="container">
+				&copy; 2024 - Nálezník - Daniel Vašut
+			</div>
+		</footer>
+		<script src="~/lib/jquery/dist/jquery.min.js"></script>
+		<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+		<script src="~/js/site.js" asp-append-version="true"></script>
+		@await RenderSectionAsync("Scripts", required: false)
+	</body>
+	</html>

@@ -1,38 +1,40 @@
 ﻿<div class="container mt-5">
-    <h2 class="text-center text-black mb-3">Map of Findings</h2>
-    <div class="map-container shadow-sm border rounded" style="height: 600px; overflow: hidden;">
-        <div id="map" style="height: 100%; width: 100%;"></div>
-    </div>
-    <div class="mt-4">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <div class="card shadow-sm">
-                    <div class="card-body">
-                        <h5 class="card-title text-black">Findings Overview</h5>
-                        <p class="card-text text-muted">
-                            Use the map above to explore various findings. Click on a marker to view more details about each finding, including its name, description, and discovery date.
-                        </p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+	<h2 class="text-center text-black mb-3">Map of Findings</h2>
+	<div class="map-container shadow-sm border rounded" style="height: 600px; overflow: hidden;">
+		<div id="map" style="height: 100%; width: 100%;"></div>
+	</div>
+	<div class="mt-4">
+		<div class="row justify-content-center">
+			<div class="col-md-8">
+				<div class="card shadow-sm">
+					<div class="card-body">
+						<h5 class="card-title text-black">Findings Overview</h5>
+						<p class="card-text text-muted">
+							Use the map above to explore various findings. Click on a marker to view more details about each finding, including its name, description, and discovery date.
+						</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
 
 <script>
-    var map = L.map('map').setView([50.0755, 14.4378], 13);
+	var map = L.map('map').setView([50.0755, 14.4378], 13);
 
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+	L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
 
-    @foreach (var item in Model) {
-        var lat = item.LocationLatitude.ToString().Replace(",", ".");
-        var lon = item.LocationLongitude.ToString().Replace(",", ".");
-        var findingDate = item.FindingDate.ToString("dd.MM.yyyy");
-        @if (item.LocationLatitude != null && item.LocationLongitude != null) {
-            <text>
-                    var marker = L.marker([@lat, @lon]).addTo(map);
-                    marker.bindPopup("<b>" + "@item.Name" + "</b><br />" + "@item.Description<br />" + "@findingDate");
-            </text>
-        }
-    }
+	@foreach (var item in Model) {
+		@if (item.LocationLatitude != null && item.LocationLongitude != null) {
+			var lat = item.LocationLatitude.ToString().Replace(",", ".");
+			var lon = item.LocationLongitude.ToString().Replace(",", ".");
+			var findingDate = item.FindingDate.ToString("dd.MM.yyyy");
+
+			<text>
+					var marker = L.marker([@lat, @lon]).addTo(map);
+					marker.bindPopup("<b>" + "@item.Name" + "</b><br />" + "@item.Description<br />" + "@findingDate");
+			</text>
+
+		}
+	}
 </script>

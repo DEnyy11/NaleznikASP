@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using NálezníkASP;
 using NálezníkASP.Models;
 using NálezníkASP.Services;
-using reCAPTCHA.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +12,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ApplicationDbContext>(options => { options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnection")); });
 builder.Services.AddScoped<FindingService>();
 builder.Services.AddScoped<DashboardService>();
+builder.Services.AddScoped<ProfileService>();
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
 builder.Services.Configure<IdentityOptions>(options => {
     options.Password.RequiredLength = 8;

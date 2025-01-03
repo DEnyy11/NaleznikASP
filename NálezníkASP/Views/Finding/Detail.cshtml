@@ -1,0 +1,98 @@
+﻿@using NálezníkASP.DTO
+@model FindingDto
+
+<div class="container mt-4">
+    <h2 class="text-center text-primary fw-bold mb-4">Details of @Model.Name</h2>
+
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">Name:</div>
+                <div class="col-md-9">@Model.Name</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">Type:</div>
+                <div class="col-md-9">@(Model.Coin ? "Coin" : "Artifact")</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">Description:</div>
+                <div class="col-md-9">@Model.Description</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">Finding Date:</div>
+                <div class="col-md-9">@(Model.FindingDate.HasValue ? Model.FindingDate.Value.ToString("dd.MM.yyyy") : "Not specified")</div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-3 fw-bold">Depth (cm):</div>
+                <div class="col-md-9">@(Model.Depth.HasValue ? Model.Depth.Value : "Not specified")</div>
+            </div>
+
+            @if (Model.Coin) {
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">Minting Year:</div>
+                    <div class="col-md-9">@(Model.MintingYear.HasValue ? Model.MintingYear.Value : "Not specified")</div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-3 fw-bold">Nominal Value:</div>
+                    <div class="col-md-9">@(Model.Nominal.HasValue ? Model.Nominal.Value : "Not specified")</div>
+                </div>
+            }
+
+            <div class="row mb-3">
+                <div class="col-md-6 text-center">
+                    <h5 class="fw-bold">Finding Photo</h5>
+                    @if (Model.FindingPhotoReview != null) {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FindingPhotoReview)"
+                             class="img-fluid rounded shadow-sm"
+                             style="max-height: 200px; object-fit: contain;" />
+                    }
+                    else {
+                        <p class="text-muted">No photo available</p>
+                    }
+                </div>
+
+                <div class="col-md-6 text-center">
+                    <h5 class="fw-bold">After Clean Photo</h5>
+                    @if (Model.AfterCleanPhotoReview != null) {
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.AfterCleanPhotoReview)"
+                             class="img-fluid rounded shadow-sm"
+                             style="max-height: 200px; object-fit: contain;" />
+                    }
+                    else {
+                        <p class="text-muted">No photo available</p>
+                    }
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-12">
+                    <h4 class="text-center fw-bold">Location</h4>
+                    @if (Model.LocationLatitude != null && Model.LocationLongitude != null) {
+                        <div id="map" style="height: 400px;" class="rounded shadow-sm"></div>
+                        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin="" />
+                        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+                        <script>
+                            var lon = @Model.LocationLatitude.ToString().Replace(",", ".");
+                            var lat = @Model.LocationLongitude.ToString().Replace(",", ".");
+                            var map = L.map('map').setView([lon, lat], 13);
+
+                            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+                            L.marker([lon, lat]).addTo(map);
+                        </script>
+                    }
+                    else {
+                        <p class="text-muted text-center">Location not specified</p>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center mt-4">
+        <a asp-controller="Finding" asp-action="MyFindings" class="btn btn-secondary">Back to Findings</a>
+    </div>
+</div>

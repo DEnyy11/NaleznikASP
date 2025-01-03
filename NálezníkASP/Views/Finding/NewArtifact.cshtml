@@ -2,10 +2,17 @@
 @model FindingDto
 
 <h1 class="text-center mb-4">New Artifact</h1>
-
+@if (ViewData["ValidationErrors"] != null) {
+    var errors = (List<string>)ViewData["ValidationErrors"];
+    <div class="alert alert-danger">
+        @foreach (var error in errors) {
+            <p>@error</p>
+        }
+    </div>
+}
 <div class="card shadow-lg">
     <div class="card-body">
-        <form asp-action="Save" method="post" enctype="multipart/form-data">
+        <form asp-action="Save" asp-route-sourceView="Artifact" method="post" enctype="multipart/form-data">
 
             <div class="row mb-3">
                 <div class="col-md-6">
@@ -22,7 +29,13 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label asp-for="FindingDate" class="form-label fw-bold">Finding Date</label>
-                    <input asp-for="FindingDate" type="date" class="form-control rounded-pill" />
+                    <input asp-for="FindingDate"
+                           type="date"
+                           class="form-control rounded-pill"
+                           min="2000-01-01"
+                           max="@DateTime.Today.ToString("yyyy-MM-dd")"
+                           value="@DateTime.Today.ToString("yyyy-MM-dd")"
+                           required />
                 </div>
                 <div class="col-md-6">
                     <label asp-for="Depth" class="form-label fw-bold">Depth (cm)</label>

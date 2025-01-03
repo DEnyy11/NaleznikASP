@@ -5,7 +5,7 @@ using NálezníkASP.DTO;
 using NálezníkASP.Models;
 
 namespace NálezníkASP.Controllers {
-
+    [Authorize(Roles = "Implementor,UserManager")]
     public class UsersController : Controller {
         private UserManager<AppUser> userManager;
         private IPasswordHasher<AppUser> passwordHasher;
@@ -20,31 +20,31 @@ namespace NálezníkASP.Controllers {
             return View(userManager.Users);
         }
 
-        public IActionResult Create() {
-            return View();
-        }
+        //public IActionResult Create() {
+        //    return View();
+        //}
 
-        [HttpPost]
-        public async Task<IActionResult> CreateAsync(UserDto newUser) {
-            if (ModelState.IsValid) {
-                AppUser appUser = new AppUser() {
-                    Email = newUser.Email,
-                    UserName = newUser.Name,
-                };
-                IdentityResult identityResult = await userManager.CreateAsync(appUser, newUser.Password);
-                if (identityResult.Succeeded) {
-                    return RedirectToAction("Index");
-                }
-                else {
-                    foreach (IdentityError error in identityResult.Errors) {
-                        ModelState.AddModelError(string.Empty, error.Description);
-                    }
-                }
+        //[HttpPost]
+        //public async Task<IActionResult> CreateAsync(UserDto newUser) {
+        //    if (ModelState.IsValid) {
+        //        AppUser appUser = new AppUser() {
+        //            Email = newUser.Email,
+        //            UserName = newUser.Name,
+        //        };
+        //        IdentityResult identityResult = await userManager.CreateAsync(appUser, newUser.Password);
+        //        if (identityResult.Succeeded) {
+        //            return RedirectToAction("Index");
+        //        }
+        //        else {
+        //            foreach (IdentityError error in identityResult.Errors) {
+        //                ModelState.AddModelError(string.Empty, error.Description);
+        //            }
+        //        }
 
-            }
-            return View(newUser);
+        //    }
+        //    return View(newUser);
 
-        }
+        //}
 
         public async Task<IActionResult> Edit(string id) {
             var appUser = await userManager.FindByIdAsync(id);

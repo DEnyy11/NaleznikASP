@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NálezníkASP.DTO;
 using NálezníkASP.Models;
 using NálezníkASP.Services;
 
 namespace NálezníkASP.Controllers {
+    [Authorize]
     public class DashboardController : Controller {
         private UserManager<AppUser> userManager;
         private DashboardService dashboardService;

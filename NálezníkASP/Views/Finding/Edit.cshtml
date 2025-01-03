@@ -25,14 +25,18 @@
             </div>
 
   
-            <div class="mb-3">
+            <div class="col-md-6">
                 <label asp-for="FindingDate" class="form-label fw-bold">Finding Date</label>
-                <input type="date" asp-for="FindingDate" class="form-control rounded-pill" />
+                <input asp-for="FindingDate"
+                       type="date"
+                       class="form-control rounded-pill"
+                       min="2000-01-01"
+                       max="@DateTime.Today.ToString("yyyy-MM-dd")"
+                       required />
             </div>
-
             <div class="mb-3">
                 <label asp-for="Depth" class="form-label fw-bold">Depth (cm)</label>
-                <input type="number" asp-for="Depth" class="form-control rounded-pill" placeholder="Enter the depth" />
+                <input type="number" asp-for="Depth" step="0.1" class="form-control rounded-pill" placeholder="Enter the depth" />
             </div>
             @if (Model.Coin == true) {
                 <div class="mb-3">
@@ -47,6 +51,7 @@
             <div class="mb-3">
                 <label asp-for="FindingPhoto" class="form-label fw-bold">Finding Photo</label>
                 <input type="file" asp-for="FindingPhoto" class="form-control" />
+                <p class="text-muted">(Photo will be updated once you click the Update button.)</p>
             </div>
             @if (Model.FindingPhotoReview != null) {
                 <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.FindingPhotoReview)" style="max-width: 100%; max-height: 200px; object-fit: contain;" />
@@ -58,6 +63,7 @@
             <div class="mb-3">
                 <label asp-for="AfterCleanPhoto" class="form-label fw-bold">After Clean Photo</label>
                 <input type="file" asp-for="AfterCleanPhoto" class="form-control" />
+                <p class="text-muted">(Photo will be updated once you click the Update button.)</p>
             </div>
             @if (Model.AfterCleanPhotoReview != null) {
                 <img src="data:image/jpeg;base64,@Convert.ToBase64String(Model.AfterCleanPhotoReview)" style="max-width: 100%; max-height: 200px; object-fit: contain;" />
@@ -74,11 +80,11 @@
             <div class="row mb-3">
                 <div class="col-md-6">
                     <label asp-for="LocationLatitude" class="form-label fw-bold">Latitude</label>
-                    <input asp-for="LocationLatitude" id="LocationLatitude" type="number" step="0.0000000000000001" class="form-control rounded-pill" placeholder="Enter latitude" />
+                    <input asp-for="LocationLatitude" id="LocationLatitude" type="number" step="0.0000000000000001" class="form-control rounded-pill" placeholder="Choose location on map" readonly />
                 </div>
                 <div class="col-md-6">
                     <label asp-for="LocationLongitude" class="form-label fw-bold">Longitude</label>
-                    <input asp-for="LocationLongitude" id="LocationLongitude" type="number" step="0.0000000000000001" class="form-control rounded-pill" placeholder="Enter longitude" />
+                    <input asp-for="LocationLongitude" id="LocationLongitude" type="number" step="0.0000000000000001" class="form-control rounded-pill" placeholder="Choose location on map" readonly />
                 </div>
             </div>
             <input asp-for="@Model.AfterCleanPhotoReview" id="AfterCleanPhotoReview" type="hidden" />

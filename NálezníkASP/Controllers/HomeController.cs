@@ -7,6 +7,7 @@ using NálezníkASP.Services;
 using NálezníkASP.DTO;
 
 namespace NálezníkASP.Controllers {
+
     public class HomeController : Controller {
         private readonly ILogger<HomeController> _logger;
         private UserManager<AppUser> userManager;
@@ -21,8 +22,8 @@ namespace NálezníkASP.Controllers {
         public IActionResult Index() {
             return View();
         }
-        
-        public IActionResult Privacy() {
+		[Authorize]
+		public IActionResult Information() {
             return View();
         }
 

@@ -33,7 +33,8 @@ namespace NálezníkASP.Services {
                 Nominal = finding.Nominal,
                 AfterCleanPhotoReview = finding.AfterCleanPhoto,
                 FindingPhotoReview = finding.FindingPhoto,
-            };
+                Username = finding.Username,
+			};
         }
 
         internal async Task SaveFindingAsync(FindingDto finding, AppUser user, bool IsCoin) {
@@ -79,7 +80,8 @@ namespace NálezníkASP.Services {
                 Nominal = finding.Nominal,
                 FindingPhoto = findingPhoto,
                 AfterCleanPhoto = AfterCleanPhoto,
-                userId = user.Id
+                userId = user.Id,
+                Username = user.UserName
             };
         }
 
@@ -90,8 +92,15 @@ namespace NálezníkASP.Services {
             }
             return null;
         }
+		internal async Task<FindingDto> GetByIdWithoutUserAsync(int id) {
+			var finding = await dbContext.findings.Where(finding => finding.Id == id).FirstOrDefaultAsync();
+			if (finding != null) {
+				return ModelToDto(finding);
+			}
+			return null;
+		}
 
-        internal async Task DeleteAsync(int id) {
+		internal async Task DeleteAsync(int id) {
             var Finding = await dbContext.findings.FirstOrDefaultAsync(x => x.Id == id);
             dbContext.Remove(Finding);
             await dbContext.SaveChangesAsync();
@@ -122,6 +131,43 @@ namespace NálezníkASP.Services {
             foreach (var finding in findingslist) {
                 findingDtos.Add(ModelToDto(finding));
             }
+
+			return findingDtos;
+		}
+
+		internal async Task<IEnumerable<FindingDto>> GetAllFindings() {
+			var allFindings = await dbContext.findings.ToListAsync();
+			var Findings = new List<FindingDto>();
+			foreach (var finding in allFindings) {
+				Findings.Add(ModelToDto(finding));
+			}
+			return Findings;
+		}
+		internal IEnumerable<FindingDto> GetFilteredFindigns(string filterName, string filterNameUser, string filterType) {
+			var findings = dbContext.findings.AsQueryable();
+
+            if (!string.IsNullOrEmpty(filterType)) {
+				if (filterType == "Coin") {
+					findings = findings.Where(x => x.Coin == true);
+				}
+				else if (filterType == "Artifact") {
+					findings = findings.Where(x => x.Coin == false);
+				}
+			}
+
+			if (!string.IsNullOrEmpty(filterName)) {
+				findings = findings.Where(x => x.Name.Contains(filterName));
+			}
+
+			if (!string.IsNullOrEmpty(filterNameUser)) {
+				findings = findings.Where(x => x.Username.Contains(filterNameUser));
+			}
+
+			var findingslist = findings.ToList();
+			var findingDtos = new List<FindingDto>();
+			foreach (var finding in findingslist) {
+				findingDtos.Add(ModelToDto(finding));
+			}
 
 			return findingDtos;
 		}

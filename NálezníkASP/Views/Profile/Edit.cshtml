@@ -1,0 +1,30 @@
+﻿@using NálezníkASP.DTO
+@model ProfileDto
+
+@{
+    ViewData["Title"] = "Edit Profile";
+}
+
+<div class="container mt-5">
+    <h1 class="text-center mb-4">Edit Your Profile</h1>
+    <div class="card">
+        <div class="card-header">
+            <h3>Edit Profile</h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="SaveProfileChanges" method="post" enctype="multipart/form-data">
+                <div class="form-group mb-3">
+                    <label for="Bio" class="form-label fw-bold">Bio</label>
+                    <textarea asp-for="Bio" class="form-control" rows="4"></textarea>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Detector" class="form-label fw-bold">Detector</label>
+                    <input asp-for="Detector" type="text" class="form-control" />
+                </div>
+                <div class="form-group text-center">
+                    <button type="submit" class="btn btn-primary">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

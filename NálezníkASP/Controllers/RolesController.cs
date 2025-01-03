@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NálezníkASP.Models;
 
 namespace NálezníkASP.Controllers {
+    [Authorize(Roles = "Implementor")]
     public class RolesController : Controller {
         private RoleManager<IdentityRole> roleManager;
         private UserManager<AppUser> userManager;
